@@ -63,7 +63,7 @@ go get github.com/charmbracelet/bubbletea
 
 # Les Bubbles disponibles
 
-Composants prêts à l'emploi — [`github.com/charmbracelet/bubbles`](https://github.com/charmbracelet/bubbles)
+Composants prêts à l'emploi -> [`github.com/charmbracelet/bubbles`](https://github.com/charmbracelet/bubbles)
 
 <div class="flex justify-center mt-6">
 <img src="https://camo.githubusercontent.com/3a59a4885c8f93fbc9b19b1d2437b46a076002ff82fbfe2125ad98b5736bf5b7/68747470733a2f2f73747566662e636861726d2e73682f627562626c65732d6578616d706c65732f6c6973742e676966" class="h-80" />
@@ -115,25 +115,144 @@ h1 {
 </style>
 
 ---
+layout: center
+class: text-center
+---
+
+# Partie 1 : l'API
+
+---
+
+# `tea.Model`
+
+L'interface que toute application Bubble Tea doit implémenter.
+
+```go
+type Model interface {
+    Init()             tea.Cmd
+    Update(tea.Msg)   (tea.Model, tea.Cmd)
+    View()             string
+}
+```
+
+<div class="grid grid-cols-3 gap-4 mt-6 text-sm">
+<div class="bg-blue-500 bg-opacity-20 p-3">
+
+**Init**
+Appelé une fois au démarrage. Retourne un `Cmd` optionnel pour lancer les effets initiaux.
+
+</div>
+<div class="bg-red-500 bg-opacity-20 p-3">
+
+**Update**
+Reçoit un `Msg`, retourne le nouvel état et un `Cmd` optionnel.
+
+</div>
+<div class="bg-green-500 bg-opacity-20 p-3">
+
+**View**
+Retourne une `string` à afficher. Fonction pure, aucun effet de bord.
+
+</div>
+</div>
+
+---
+
+# `tea.Msg`
+
+`Msg` est une **interface vide**. N'importe quel type Go peut devenir un message.
+
+```go
+type Msg interface{}
+```
+
+<div class="grid grid-cols-2 gap-6 mt-4 text-sm">
+<div>
+
+**Messages built-in**
+```go
+tea.KeyMsg        // touche clavier
+tea.WindowSizeMsg // redimensionnement
+tea.MouseMsg      // événement souris
+```
+
+</div>
+<div>
+
+**Messages custom**
+```go
+type choicesLoadedMsg struct {
+    choices []string
+    err     error
+}
+```
+
+</div>
+</div>
+
+---
+
+# `tea.Cmd`
+
+`Cmd` est une **fonction** que le runtime exécute en goroutine et dont le résultat revient dans Update.
+
+```go
+type Cmd func() Msg
+```
+
+<div class="grid grid-cols-2 gap-6 mt-6 text-sm">
+<div>
+
+**Pourquoi pas du synchrone ?**
+
+`Update` tourne sur la boucle principale. Un appel bloquant gèle toute l'UI, plus aucune touche ne répond, le terminal ne se redessine plus.
+
+Un `Cmd` délègue le travail à une goroutine, **la boucle reste fluide** pendant l'I/O.
+
+</div>
+<div>
+
+**Définir et lancer une commande**
+```go
+func loadChoices() tea.Cmd {
+    return func() tea.Msg {
+        choices, err := fetchFromAPI()
+        return choicesLoadedMsg{choices, err}
+    }
+}
+
+// dans Update :
+case "r":
+    m.loading = true          // appliqué immédiatement
+    return m, loadChoices()   // lancé en goroutine
+```
+
+</div>
+</div>
+
+
+---
+layout: center
+class: text-center
+---
+
+# Partie 2 : mini démo
+
+---
 
 # Le Modèle
 
-**Le modèle** est une `struct` Go qui contient **tout l'état** de l'application
-
 ```go
-package main
-
-// La structure du modèle qui contiendra tout le "state"
 type model struct {
     choices  []string
     cursor   int
     selected map[int]struct{}
+    loading  bool
 }
 
-// L'état initial
 func initialModel() model {
     return model{
-        choices:  []string{"Bubble Tea", "Lipgloss", "Glamour"},
+        loading:  true,
         selected: make(map[int]struct{}),
     }
 }
@@ -141,7 +260,7 @@ func initialModel() model {
 
 <div class="mt-4 text-sm opacity-70">
 
-> Pas de mutation globale, l'état est **immuable** et remplacé à chaque update
+> `choices` est vide au démarrage il sera rempli par un `Cmd` dans `Init`
 
 </div>
 
@@ -149,39 +268,39 @@ func initialModel() model {
 
 # Init
 
-**Init** est appelé une seule fois au démarrage. Retourne un `Cmd` optionnel.
-
-```go 
-// tea.Cmd représente une commande asynchrone (I/O, timer…)
-// tea.Msg est le résultat qui reviendra dans Update
-
-func (m model) Init() tea.Cmd {
-    // Pas d'I/O au démarrage ici → nil
-    return nil
-}
-```
-
-<div class="mt-6">
-
-Exemples de `Cmd` utiles :
+`Init` lance le chargement des données au démarrage via un `Cmd`.
 
 ```go
-tea.Tick(time.Second, func(t time.Time) tea.Msg { … }) // timer
-tea.ExecProcess(cmd, func(err error) tea.Msg { … })    // process
-```
+type choicesLoadedMsg struct {
+    choices []string
+}
 
-</div>
+func (m model) Init() tea.Cmd {
+    return loadChoices()
+}
+
+func loadChoices() tea.Cmd {
+    return func() tea.Msg {
+        // simulation d'un appel externe (base de données, API…)
+        time.Sleep(2 * time.Second)
+        languages := []string{"Go", "Rust", "TypeScript", "Python", "C"}
+        return choicesLoadedMsg{languages}
+    }
+}
+```
 
 ---
 
 # Update
 
-**Update** reçoit un `Msg`, met à jour le modèle et retourne un nouveau modèle + une commande optionnelle
-
-
-```go {*}{maxHeight:'350px'}
+```go {*}{maxHeight:'320px'}
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
     switch msg := msg.(type) {
+
+    case choicesLoadedMsg:
+        m.loading = false
+        m.choices = msg.choices
+
     case tea.KeyMsg:
         switch msg.String() {
         case "ctrl+c", "q":
@@ -214,21 +333,20 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 # View
 
-**View** transforme le modèle en `string` : fonction pure, aucun effet de bord
-
-```go {*}{maxHeight:'350px'}
+```go {*}{maxHeight:'320px'}
 func (m model) View() string {
-    s := "Quelle lib Charm utilises-tu ?\n\n"
+    if m.loading {
+        return "Chargement…\n"
+    }
+
+    s := "Quel est ton langage de programmation favori ?\n\n"
 
     for i, choice := range m.choices {
-
-        // Curseur
         cursor := " "
         if m.cursor == i {
             cursor = ">"
         }
 
-        // Item sélectionné
         checked := " "
         if _, ok := m.selected[i]; ok {
             checked = "x"
@@ -237,7 +355,7 @@ func (m model) View() string {
         s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
     }
 
-    s += "\nAppuie sur q pour quitter.\n"
+    s += "\nq pour quitter\n"
     return s
 }
 ```
@@ -250,7 +368,7 @@ func (m model) View() string {
 
 # Assembler le tout
 
-```go {all|3-7}
+```go
 func main() {
     p := tea.NewProgram(initialModel())
 
@@ -267,13 +385,15 @@ func main() {
 
 **Le résultat :**
 ```
-Quelle lib Charm utilises-tu ?
+Quel est ton langage de programmation favori ?
 
-> [x] Bubble Tea
-  [ ] Lipgloss
-  [ ] Glamour
+> [x] Go
+  [ ] Rust
+  [ ] TypeScript
+  [ ] Python
+  [ ] C
 
-Appuie sur q pour quitter.
+q pour quitter
 ```
 
 </div>
@@ -292,37 +412,6 @@ Appuie sur q pour quitter.
 
 </div>
 
----
-
-# Les Commandes (Cmd)
-
-Les `Cmd` permettent de gérer les **effets de bord** de façon contrôlée
-
-```go
-// Un Cmd est juste une fonction qui retourne un Msg
-type Cmd func() Msg
-
-// Exemple : appel HTTP asynchrone
-func fetchData() tea.Cmd {
-    return func() tea.Msg {
-        resp, err := http.Get("https://api.example.com/data")
-        if err != nil {
-            return errMsg{err}
-        }
-        return dataMsg{resp}
-    }
-}
-
-// Dans Update, on lance la commande
-case tea.KeyMsg:
-    if msg.String() == "f" {
-        return m, fetchData()
-    }
-```
-
-<div class="mt-4 text-sm opacity-70">
-→ L'I/O est isolé hors du cycle Model/View, la logique reste testable
-</div>
 
 ---
 
@@ -383,39 +472,6 @@ layout: center
 class: text-center
 ---
 
-# Pourquoi Bubble Tea ?
-
-<div class="grid grid-cols-2 gap-12 mt-8 text-left">
-
-<div>
-
-### ✅ Avantages
-- Architecture **prévisible** et testable
-- Séparation claire état / rendu / effets
-- Composants **réutilisables** (Bubbles)
-- Style puissant avec Lip Gloss
-- Communauté active (Charm)
-
-</div>
-
-<div>
-
-### 🎯 Idéal pour
-- CLIs interactifs
-- Dashboards terminal
-- Outils de dev (git, k8s, docker…)
-- Jeux en ASCII
-- Apps SSH avec Wish
-
-</div>
-
-</div>
-
----
-layout: center
-class: text-center
----
-
 # 🧋 Merci !
 
 <div class="text-2xl mt-4 opacity-80">
@@ -424,8 +480,3 @@ class: text-center
 
 </div>
 
-<div class="mt-8 grid grid-cols-3 gap-4 text-sm opacity-60">
-  <div>github.com/charmbracelet/lipgloss</div>
-  <div>github.com/charmbracelet/bubbles</div>
-  <div>github.com/charmbracelet/glamour</div>
-</div>
