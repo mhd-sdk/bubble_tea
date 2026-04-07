@@ -74,6 +74,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				m.selected[m.cursor] = struct{}{}
 			}
+		case "r":
+			m.loading = true
+			m.choices = nil
+			m.selected = make(map[int]struct{})
+			m.cursor = 0
+			return m, loadChoices()
 		}
 	}
 	return m, nil
@@ -102,7 +108,7 @@ func (m model) View() string {
 		s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
 	}
 
-	s += "\nq pour quitter\n"
+	s += "\nq pour quitter • r pour rafraîchir\n"
 	return s
 }
 

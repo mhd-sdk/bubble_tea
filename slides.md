@@ -29,19 +29,67 @@ mdc: true
 
 ---
 
+# Qui suis-je ?
+
+<div class="grid grid-cols-2 gap-8 mt-2">
+
+<div>
+
+### Mehdi Seddik
+<div class="mt-[-0.5rem]">
+
+Dev Backend chez **Batch** depuis septembre 2025
+
+</div>
+
+### Formation
+<div class="mt-[-0.5rem]">
+
+- Mastère expert développement logiciel Ynov Lyon
+- DUT informatique — IUT Lyon 1
+
+</div>
+
+### Contact
+<div class="mt-[-0.5rem] text-sm opacity-70">
+
+🔗 linkedin.com/in/mehdi-seddik
+
+</div>
+
+</div>
+
+<div class="flex items-center justify-center">
+  <img src="/photo.jpg" class="rounded-xl h-64 object-cover" />
+</div>
+
+</div>
+
+---
+
 # Qu'est-ce que Bubble Tea ?
 
 Une lib Go pour construire des **interfaces en ligne de commande interactives** (TUI)
 
-<div class="grid grid-cols-2 gap-8 mt-8">
+<div class="grid grid-cols-2 gap-8 mt-2">
 
 <div>
 
 ### Caractéristiques
+<div class="mt-[-0.5rem]">
+
 - Basé sur l'**architecture Elm**
 - Gestion clavier et souris
 - Composable et modulaire
-- Écosystème Charm (Lip Gloss, Bubbles…)
+
+</div>
+
+### Créé par [Charm](https://charm.sh)
+<div class="mt-[-0.5rem]">
+
+Charm est une société open source qui développe des outils pour améliorer l'expérience terminal. 
+
+</div>
 
 </div>
 
@@ -51,7 +99,7 @@ Une lib Go pour construire des **interfaces en ligne de commande interactives** 
 
 </div>
 
-<div class="mt-8 text-center">
+<div class="mt-4 text-center">
 
 ```bash
 go get github.com/charmbracelet/bubbletea
@@ -61,41 +109,79 @@ go get github.com/charmbracelet/bubbletea
 
 ---
 
-# Les Bubbles disponibles
+# L'écosystème Charm
 
-Composants prêts à l'emploi -> [`github.com/charmbracelet/bubbles`](https://github.com/charmbracelet/bubbles)
+<div class="flex flex-col gap-2 mt-4 text-sm">
 
-<div class="flex justify-center mt-6">
-<img src="https://camo.githubusercontent.com/3a59a4885c8f93fbc9b19b1d2437b46a076002ff82fbfe2125ad98b5736bf5b7/68747470733a2f2f73747566662e636861726d2e73682f627562626c65732d6578616d706c65732f6c6973742e676966" class="h-80" />
+<div class="border border-purple-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">🫧 Bubbles</span>
+<span class="opacity-60">Composants prêts à l'emploi : inputs, viewports, spinners…</span>
+<a href="https://github.com/charmbracelet/bubbles" class="ml-auto font-mono opacity-50 text-xs">github.com/charmbracelet/bubbles</a>
+</div>
+
+<div class="border border-pink-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">💄 Lip Gloss</span>
+<span class="opacity-60">Style, mise en page et formatage pour le terminal</span>
+<a href="https://github.com/charmbracelet/lipgloss" class="ml-auto font-mono opacity-50 text-xs">github.com/charmbracelet/lipgloss</a>
+</div>
+
+<div class="border border-blue-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">🎯 Harmonica</span>
+<span class="opacity-60">Animations spring pour des mouvements fluides et naturels</span>
+<a href="https://github.com/charmbracelet/harmonica" class="ml-auto font-mono opacity-50 text-xs">github.com/charmbracelet/harmonica</a>
+</div>
+
+<div class="border border-yellow-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">🖱️ BubbleZone</span>
+<span class="opacity-60">Tracking des événements souris par zone</span>
+<a href="https://github.com/lrstanley/bubblezone" class="ml-auto font-mono opacity-50 text-xs">github.com/lrstanley/bubblezone</a>
+</div>
+
+<div class="border border-green-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">📊 ntcharts</span>
+<span class="opacity-60">Graphiques dans le terminal pour Bubble Tea et Lip Gloss</span>
+<a href="https://github.com/NimbleMarkets/ntcharts" class="ml-auto font-mono opacity-50 text-xs">github.com/NimbleMarkets/ntcharts</a>
+</div>
+
+<div class="border border-green-500 border-opacity-50 px-4 py-2 flex items-center gap-4">
+<span class="font-bold whitespace-nowrap">✨ Glamour</span>
+<span class="opacity-60">Rendu Markdown dans le terminal</span>
+<a href="https://github.com/charmbracelet/glamour" class="ml-auto font-mono opacity-50 text-xs">github.com/charmbracelet/glamour</a>
+</div>
+
 </div>
 
 ---
-layout: center
-class: text-center
----
 
-# L'Architecture Elm
+# Ils utilisent Bubble Tea
 
+<div class="flex flex-col gap-2 mt-6 text-sm">
 
-> Un pattern fonctionnel et réactif pour gérer l'état ⚡
+<div class="border border-white border-opacity-10 px-4 py-2 flex items-center gap-4">
+<span>🏠</span>
+<a href="https://github.com/twpayne/chezmoi" class="font-bold">chezmoi</a>
+<span class="opacity-60">gestionnaire de dotfiles</span>
+<a href="https://github.com/twpayne/chezmoi" class="ml-auto font-mono opacity-50 text-xs">github.com/twpayne/chezmoi</a>
+</div>
 
----
+<div class="border border-white border-opacity-10 px-4 py-2 flex items-center gap-4">
+<span>🐙</span>
+<a href="https://github.com/jesseduffield/lazygit" class="font-bold">lazygit</a>
+<span class="opacity-60">TUI Git</span>
+<a href="https://github.com/jesseduffield/lazygit" class="ml-auto font-mono opacity-50 text-xs">github.com/jesseduffield/lazygit</a>
+</div>
 
-# L'Architecture Elm : Vue d'ensemble
+<div class="border border-white border-opacity-10 px-4 py-2 flex items-center gap-4">
+<span>✨</span>
+<a href="https://github.com/charmbracelet/gum" class="font-bold">gum</a>
+<span class="opacity-60">scripts shell interactifs</span>
+<a href="https://github.com/charmbracelet/gum" class="ml-auto font-mono opacity-50 text-xs">github.com/charmbracelet/gum</a>
+</div>
 
-<div class="flex gap-4" style="height: calc(100% - 4rem);">
+</div>
 
-  <div class="flex items-start" style="width: fit-content;">
-    <img src="https://mentalbreaktown.blog/wp-content/uploads/2020/11/elm.png" style="max-height: 100%; width: auto;" />
-  </div>
-
-  <div class="flex flex-col gap-4 text-sm  self-start">
-    <div class="bg-blue-500 bg-opacity-20 p-3"><b>Model</b> : structure de données qui représente tout l'état de l'app</div>
-    <div class="bg-green-500 bg-opacity-20 p-3"><b>View</b> : rendu pur du modèle en string</div>
-    <div class="bg-red-500 bg-opacity-20 p-3"><b>Update</b> : réagit aux événements, retourne un nouveau modèle</div>
-    <p class="text-xs opacity-50 ">Même système que useReducer ou Redux pour avec React</p>
-  </div>
-
+<div class="mt-4 text-xs opacity-50 text-right">
+<a href="https://github.com/charmbracelet/bubbletea?tab=readme-ov-file#staff-favourites">et bien d'autres</a>
 </div>
 
 ---
@@ -119,7 +205,39 @@ layout: center
 class: text-center
 ---
 
-# Partie 1 : l'API
+# L'Architecture Elm
+
+> Un pattern fonctionnel et réactif pour gérer l'état ⚡
+
+---
+
+# L'Architecture Elm : Vue d'ensemble
+
+<div class="flex gap-4" style="height: calc(100% - 4rem);">
+
+  <div class="flex items-start" style="width: fit-content;">
+    <img src="https://mentalbreaktown.blog/wp-content/uploads/2020/11/elm.png" style="max-height: 100%; width: auto;" />
+  </div>
+
+  <div class="flex flex-col gap-4 text-sm self-start">
+    <div class="bg-blue-500 bg-opacity-20 p-3"><b>Model</b> : structure de données qui représente tout l'état de l'app</div>
+    <div class="bg-green-500 bg-opacity-20 p-3"><b>View</b> : rendu pur du modèle en string</div>
+    <div class="bg-red-500 bg-opacity-20 p-3"><b>Update</b> : réagit aux événements, retourne un nouveau modèle</div>
+    <div class="text-xs opacity-50 border-l-2 border-white border-opacity-20 pl-3">
+      <b>Elm</b> est le langage qui a inventé ce pattern.<br/>
+      <b>MVU</b> (Model–View–Update) en est la généralisation.
+    </div>
+    <p class="text-xs opacity-50">Même système que useReducer ou Redux avec React</p>
+  </div>
+
+</div>
+
+---
+layout: center
+class: text-center
+---
+
+# L'API Bubble Tea
 
 ---
 
@@ -236,7 +354,23 @@ layout: center
 class: text-center
 ---
 
-# Partie 2 : mini démo
+# Démo
+
+<div class="text-left inline-block">
+
+```
+Quel est ton langage de programmation favori ?
+
+> [x] Go
+  [ ] Rust
+  [ ] TypeScript
+  [ ] Python
+  [ ] C
+
+q pour quitter
+```
+
+</div>
 
 ---
 
@@ -319,6 +453,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
             } else {
                 m.selected[m.cursor] = struct{}{}
             }
+        case "r":
+            m.loading = true
+            m.choices = nil
+            m.selected = make(map[int]struct{})
+            m.cursor = 0
+            return m, loadChoices()
         }
     }
     return m, nil
@@ -379,26 +519,7 @@ func main() {
 }
 ```
 
-<div class="mt-6 grid grid-cols-2 gap-6">
-
-<div>
-
-**Le résultat :**
-```
-Quel est ton langage de programmation favori ?
-
-> [x] Go
-  [ ] Rust
-  [ ] TypeScript
-  [ ] Python
-  [ ] C
-
-q pour quitter
-```
-
-</div>
-
-<div class="text-sm mt-2">
+<div class="mt-2 text-sm">
 
 **3 méthodes suffisent** pour une TUI complète :
 
@@ -410,62 +531,13 @@ q pour quitter
 
 </div>
 
-</div>
-
 
 ---
+layout: center
+class: text-center
+---
 
-# L'écosystème Charm
-
-<div class="grid grid-cols-3 gap-4 mt-6">
-
-<div class="border border-pink-500 border-opacity-50 p-4">
-
-### 💄 Lip Gloss
-Styling CSS-like pour le terminal
-
-```go
-style := lipgloss.NewStyle().
-    Bold(true).
-    Foreground(lipgloss.Color("#FF06B7")).
-    PaddingLeft(4)
-
-fmt.Println(style.Render("Hello!"))
-```
-
-</div>
-
-<div class="border border-blue-500 border-opacity-50 p-4">
-
-### 🫧 Bubbles
-Composants prêts à l'emploi
-
-- `textinput`
-- `textarea`
-- `list`
-- `table`
-- `progress`
-- `spinner`
-- `viewport`
-
-</div>
-
-<div class="border border-green-500 border-opacity-50 p-4">
-
-### ✨ Glamour
-Rendu Markdown dans le terminal
-
-```go
-out, _ := glamour.Render(
-    "# Hello **world**",
-    "dark",
-)
-fmt.Print(out)
-```
-
-</div>
-
-</div>
+# Démo un peu plus avancée 🚀
 
 ---
 layout: center
@@ -477,6 +549,12 @@ class: text-center
 <div class="text-2xl mt-4 opacity-80">
 
 `github.com/charmbracelet/bubbletea`
+
+</div>
+
+<div class="text-xl mt-4 opacity-60">
+
+Slides : `github.com/mhd-sdk/bubble_tea`
 
 </div>
 
